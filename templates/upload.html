@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>Modelo 182 - Generador</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/4.1.3/bootstrap.min.css') }}">
+		<link rel="shortcut icon" href="/static/img/favicon.ico"/>
+  </head>
+  <body>
+
+<div class="container">
+  <div class="row">
+   <div class="col-md"></div>
+   <div class="col-md-10 mt-5">
+		  
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<h1>Generador del Modelo 182 </h1>
+					Generador del Modelo 182 según las especificaciones de la Agencia Tributaria (<a href="https://www.agenciatributaria.es/static_files/AEAT/Contenidos_Comunes/La_Agencia_Tributaria/Ayuda/Disenyos_de_registro/Ayudas/DR_100_a_199/ficheros/DR182_2016.pdf" >pdf</a>)
+				</div>
+				<div class="col-md-3"><img src="/static/img/aeat.png" width="100"/> </div>
+			</div>
+			<div class="row">
+				<div class="col-md">
+		Por favor, rellena los siguientes campos y adjunta los 3 archivos necesarios para poder generar el fichero.
+			</div>
+			</div>
+		</div>
+		<hr/>
+        <form accept-charset="UTF-8" action="http://localhost:5000/uploader" method="POST" enctype="multipart/form-data">
+		<div class="d-flex justify-content-between">
+          <div class="form-group">
+            <label for="inputEjercicio"><b>EJERCICIO</b> actual</label>
+            <input type="number" name="ejercicio" class="form-control" id="inputEjercicio" value="2020" placeholder="2020" required="required" >
+          </div>
+        
+		  <div class="form-group">
+            <label for="inputNIF"><b>NIF</b> del declarante</label>
+            <input type="text" name="nif" class="form-control" id="inputNIF" placeholder="12345678Z" required="required" >
+          </div>
+		  
+		  <div class="form-group">
+            <label for="inputDenominacion" required="required"><b>DENOMINACION</b> del declarante</label>
+            <input type="text" name="denominacion" class="form-control" id="inputDenominacion" aria-describedby="emailHelp" placeholder="Fundacion XYZ" required="required" >
+          </div>
+        </div> 
+
+        <hr/>
+		
+		<div class="d-flex justify-content-between">
+          <div class="form-group">
+            <label for="inputPersona"><b>PERSONA</b> de contacto</label>
+            <input type="text" name="persona" class="form-control" id="inputPersona" placeholder="Ana Perez" required="required" >
+          </div>
+        
+		  <div class="form-group">
+            <label for="inputTelefono"><b>TELÉFONO</b> de contacto</label>
+			  <input class="form-control" name="telefono" type="tel" id="inputTelefono" placeholder="600555444"  required="required">
+          </div>
+		  
+		  <div class="form-group">
+            <label for="nada"></label>
+            <input type="text" name="justificante" class="form-control invisible" id="nada" placeholder="">
+          </div>
+        </div> 
+
+          <hr/>	
+
+		<div class="d-flex justify-content-between">
+		
+			<div id="tipoDeclaracion">
+			    <label for="tipoDeclaracion"><b>TIPO</b> de declaración</label>
+				<div class="form-check">
+				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+				  <label class="form-check-label" for="exampleRadios1">
+					Normal
+				  </label>
+				</div>
+				<div class="form-check">
+				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+				  <label class="form-check-label" for="exampleRadios2">
+					Complementaria
+				  </label>
+				</div>
+				<div class="form-check">
+				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+				  <label class="form-check-label" for="exampleRadios3">
+					Sustitutiva
+				  </label>
+				</div>
+			</div>
+        
+		  <div class="form-group">
+            <label for="inputJustificante" required="required"><b>NÚMERO</b> justificante declaración</label>
+            <input type="text" name="justificante" class="form-control" id="inputJustificante" placeholder="1822628017603" required="required" >
+          </div>
+		  
+		  <div class="form-group">
+            <label for="inputIDanterior" required="required"><b>ID</b> declaración anterior</label>
+            <input type="text" name="idAnterior" class="form-control" id="inputIDanterior" placeholder="0000000000000" required="required" >
+          </div>
+        </div> 
+
+          <hr/>	
+          <div class="form-group mt-3">
+		     <label for="elcsv"  required="required">Subir fichero <b>CVS</b> con datos del <b>ejercicio actual</b>:</label><br/>
+            <input type="file" name="year0" id="elcsv"  required="required">
+          </div>
+          <hr>
+          <div class="form-group mt-3">
+		     <label for="export1"  required="required">Subir fichero exportado el <b>año anterior</b>:</label><br/>
+            <input type="file" name="year1" id="export1" required="required">
+          </div>
+          <hr>
+          <div class="form-group mt-3">
+		     <label for="export2"  required="required">Subir fichero exportado <b>hace dos años</b>:</label><br/>
+            <input type="file" name="year2" id="export2" required="required">
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div> 
+    <div class="col-md"></div>
+
+  </div>
+</div>
+	
+  </body>
+</html>
