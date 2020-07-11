@@ -69,23 +69,23 @@
 
 		<div class="d-flex justify-content-between">
 		
-			<div id="tipoDeclaracion">
-			    <label for="tipoDeclaracion"><b>TIPO</b> de declaración</label>
+			<div id="optionsDeclaracion">
+			    <label for="optionsDeclaracion"><b>TIPO</b> de declaración</label>
 				<div class="form-check">
-				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-				  <label class="form-check-label" for="exampleRadios1">
+				  <input class="form-check-input" type="radio" name="tipoDeclaracion" id="radioNormal" value="XX" checked>
+				  <label class="form-check-label" for="radioNormal">
 					Normal
 				  </label>
 				</div>
 				<div class="form-check">
-				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-				  <label class="form-check-label" for="exampleRadios2">
+				  <input class="form-check-input" type="radio" name="tipoDeclaracion" id="radioComplementaria" value="CX">
+				  <label class="form-check-label" for="radioComplementaria">
 					Complementaria
 				  </label>
 				</div>
 				<div class="form-check">
-				  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-				  <label class="form-check-label" for="exampleRadios3">
+				  <input class="form-check-input" type="radio" name="tipoDeclaracion" id="radioSustitutiva" value="XS">
+				  <label class="form-check-label" for="radioSustitutiva">
 					Sustitutiva
 				  </label>
 				</div>
@@ -105,17 +105,17 @@
           <hr/>	
           <div class="form-group mt-3">
 		     <label for="elcsv"  required="required">Subir fichero <b>CVS</b> con datos del <b>ejercicio actual</b>:</label><br/>
-            <input type="file" name="year0" id="elcsv"  required="required">
+            <input type="file" name="year" id="elcsv"  required="required">
           </div>
           <hr>
           <div class="form-group mt-3">
 		     <label for="export1"  required="required">Subir fichero exportado el <b>año anterior</b>:</label><br/>
-            <input type="file" name="year1" id="export1" required="required">
+            <input type="file" name="year" id="export1" required="required">
           </div>
           <hr>
           <div class="form-group mt-3">
 		     <label for="export2"  required="required">Subir fichero exportado <b>hace dos años</b>:</label><br/>
-            <input type="file" name="year2" id="export2" required="required">
+            <input type="file" name="year" id="export2" required="required">
           </div>
           <hr>
           <button type="submit" class="btn btn-primary">Enviar</button>

@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from werkzeug.utils import secure_filename
-import src.modelo182
+import src.modelo182 as m182
+import src.tools as tools
+DIR_UPLOADS = "uploads"
+DIR_SOURCE  = "src"
 
 app = Flask(__name__)
 
@@ -11,20 +14,25 @@ def render_uploader():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
-      #f.save(secure_filename(f.filename))
-      f0 = request.files['year0']
-      f1 = request.files['year1']
-      f2 = request.files['year2']
-      f0.save("datos.csv")
-      f1.save("year1.txt")
-      f2.save("year2.txt")
+      paths = tools.handle_files(DIR_UPLOADS, request.files)
+      df, dfyear1, dfyear2 = m182.load_files(paths)
+      linea1    = m182.reg_tipo1(df)
+      dflineas2 = m182.reg_tipo2(DIR_SOURCE, df, dfyear1, dfyear2)
+      dfinal    = m182.unir(linea1, dflineas2)
+      filename, resultado   = m182.convertir_iso8859(dfinal)
       
-      ejercicio = request.form['ejercicio']
+      return Response(
+        resultado,
+        mimetype="text/text",
+        headers={"Content-disposition":
+                 "attachment; filename=" + filename})
+      # return render_template('home.html', html=dfinal.to_html())
 
-      a = saluda()
-      
-      return ejercicio + 'files uploaded successfully ' + a
 		
 if __name__ == '__main__':
    app.run(debug = True)
-   
+
+
+
+    
+    
