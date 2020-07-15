@@ -24,7 +24,7 @@ from builtins import str
 import unidecode
 import codecs
 import os
-
+from matplotlib import cm
 
 # ### Definicion de Funciones propias ```validate_DNI_NIE()``` ```extract_DNI_dana()```
 
@@ -108,10 +108,11 @@ APELLIDOS_NOMBRE_TITULAR_PATRIMONIO = ' ' * 40
 
 
 # PATHs
-DIR_DATOS                           = "xxx"
 FICHERO_CSV_ANIO_ACTUAL             = "calm4_dana_2019.csv"
 FICHERO_EXPORTACION_ANIO_ANTERIOR   = "exportacion_2018.txt"
 FICHERO_EXPORTACION_ANIO_ANTERIOR_2 = "exportacion_2017.txt"
+FICHERO_COMUNIDADES_AUTONOMAS       = "cautonomas.csv"
+FICHERO_PROVINCIAS                  = "provincias.tsv" #tab separated values
 
 # CONSTANTES
 TIPO_REGISTRO = "1" 
@@ -124,15 +125,21 @@ SELLO_ELECTRONICO = ' ' * 13
 
 # Global dict usado para gestión de errores en callback 'unidecode_fallback'
 usuarios_error = {}   
+# Global stats para almacenar informacion a mostrar
+stats = {}
 
 # Load files
-def load_files(paths):
+def load_uploaded_files(paths):
     df = pd.read_csv(paths[0])
     dfyear1 = extract_DNI_dana(paths[1], columns=["dni1", "dana1"])
     dfyear2 = extract_DNI_dana(paths[2], columns=["dni2", "dana2"])
     return (df, dfyear1, dfyear2)
 
-
+def load_local_dataframes(path):
+    dfprov = pd.read_csv('.\\' + path + '\\' + FICHERO_PROVINCIAS, sep='\t', dtype=str) # tab sepparated values
+    dfca = pd.read_csv('.\\' + path + '\\' + FICHERO_COMUNIDADES_AUTONOMAS, dtype=str)
+    return (dfprov, dfca)
+    
 # ### REGISTRO TIPO 1 (pdf Hacienda, pág.2)
 
 # In[17]:
@@ -151,6 +158,10 @@ def reg_tipo1(df):
     linea1 += '{0:013.0f}'.format(IMPORTE_DONATIVOS) + '{0:.2f}'.format(IMPORTE_DONATIVOS)[-2:]
     linea1 += NATURALEZA_DECLARANTE + NIF_TITULAR_PATRIMONIO + APELLIDOS_NOMBRE_TITULAR_PATRIMONIO
     linea1 += BLANCOS + SELLO_ELECTRONICO
+    
+    add_stats("NUMERO DONACIONES", count, "Numero total de donaciones")
+    add_stats("IMPORTE TOTAL", IMPORTE_DONATIVOS, "Suma de todas las donaciones")
+    
     return linea1
 
 
@@ -159,7 +170,7 @@ def reg_tipo1(df):
 # In[21]:
 
 
-def reg_tipo2(DIR_SOURCE, df, dfyear1, dfyear2):
+def reg_tipo2(path_downloads, df, dfyear1, dfyear2, dfprov, dfca):
     count = df.shape[0] 
     # REGISTROS TIPO 2 (pdf Hacienda, pág.9)
     row_beginning = "2" + MODELO_DECLARACION + EJERCICIO + NIF_DECLARANTE
@@ -176,6 +187,10 @@ def reg_tipo2(DIR_SOURCE, df, dfyear1, dfyear2):
     dfaux["tmp"] = dfaux["tmp"].str.upper()
     # Validar los DNIs..
     dni_mask = dfaux["tmp"].apply(validate_DNI_NIE) 
+    
+    add_stats("DNI INVALIDOS", dni_mask.value_counts()[False], "Documentos de identidad NO válidos")
+    add_stats("DNI VALIDOS", dni_mask.value_counts()[True], "Documentos de identidad válidos")
+    
     # ..para poder poner los incorrectos en blanco
     dfaux.loc[~dni_mask, ["tmp"]] = ' ' * 9
     dflineas2["Tipo2"] += dfaux["tmp"]
@@ -189,13 +204,36 @@ def reg_tipo2(DIR_SOURCE, df, dfyear1, dfyear2):
     dflineas2["Tipo2"] += ((dfaux["Tipo2"].str.upper()).str.ljust(40).str[:40])
 
     # 76-77 CODIGO DE PROVINCIA
-    dfprov = pd.read_csv(os.path.join(DIR_SOURCE, "mod182\provincias.tsv"), sep='\t', dtype=str) # tab sepparated values
     # MANY_TO_ONE MERGE
-    dfaux = df.merge(dfprov, how="left",left_on="Address State", right_on="Provincia")
-    mask_nan = pd.isna(dfaux["Codigo"])   
-    dfaux.loc[mask_nan, "Codigo"] = "99" # Codigo por defecto para extranjeros
-    #dfaux["Codigo"] = dfaux["Codigo"].astype(int) #merge ha dejado decimales '.0'
-    dflineas2["Tipo2"]   += dfaux["Codigo"]
+    dfaux = df.merge(dfprov, how="left",left_on="Address State", right_on="provincia")
+    add_stats("MONEDA", pd.DataFrame(dfaux["Currency"].value_counts()).to_html(), "Distintos tipos de divisas usadas")
+    dfaux["donacion"] = df["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
+    # borrar: mask_nan = pd.isna(dfaux["Codigo"])   
+
+    # Extranjeros: Sustituir NaN por valores que permitan agrupar y trabajar con ellos 
+    dfaux.loc[ pd.isna(dfaux.cod_prov), ["provincia", "cod_prov", "cod_ca"]] = ["NO RESIDENTE", "99", "99"]
+    
+    dflineas2["Tipo2"]   += dfaux["cod_prov"]
+    
+    # ################################## PLOT #####################
+    # PLOT Dana x Provincia: Preparar el dataset (limpiar 'dana', agrupar y sumar por CA, ordenar por dana decreciente)
+    dfbydana = dfaux.merge(dfca, how="left",on="cod_ca")
+    dfbydana = dfbydana.groupby(["comunidad"])["donacion"].sum().reset_index()
+    dfbydana = dfbydana.sort_values(by = ['donacion'], ascending=[False]).reset_index(drop=True)
+
+    color = cm.plasma_r(np.linspace(.4, .8, 30))
+    x = [{i: dfbydana.loc[i,'donacion']} for i in range(len(dfbydana))]
+    # BAR plot: Por 'Provincia' SIN extanjero
+    dfplot = pd.DataFrame(x)
+    ax = dfplot.plot(kind='bar',figsize=(12, 10), legend=True, fontsize=12, stacked=True ,color=color)
+    #ax = dfxx.plot(kind='bar',figsize=(15, 10), legend=True, fontsize=12, stacked=True ,color=color)
+    plt.xticks(range(0,len(dfbydana.comunidad)), dfbydana.comunidad, rotation=75)
+    ax.set_xlabel("Provincia", fontsize=14)
+    ax.set_ylabel("Donacion (eur)", fontsize=14)
+    ax.set_title(EJERCICIO + "\nDonaciones agrupadas por Comunidades Autónomas", fontsize=14)
+    plt.legend(["Donación (eur)"])
+    plt.savefig('.\\' + path_downloads + '\\' + 'foo.png', bbox_inches='tight')
+    # #############################################################
 
     # 78 CLAVE
     dflineas2["Tipo2"]   += 'A'
@@ -210,6 +248,7 @@ def reg_tipo2(DIR_SOURCE, df, dfyear1, dfyear2):
     dfaux["dana0"] = dfaux["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
     # Donantes recurrentes (este añe & año pasado & hace 2 años
     mask_recurrentes = (~pd.isna(dfaux["dni2"])) & (dfaux["dana0"] >= dfaux["dana1"]) & (dfaux["dana1"] >= dfaux["dana2"]) & (dfaux["dana2"] > 0)
+    add_stats("NUMERO RECURRENTES", mask_recurrentes.value_counts()[1], "Número de personas que han donado este año y los dos anteriores")
     # Apicar CRITERIO % DEDUCCION segun Agencia  Tributaria
     dfaux.loc[dfaux["dana0"] < 150, "deduc"] = "075"
     dfaux.loc[dfaux["dana0"] >= 150, "deduc"] = "030"
@@ -273,20 +312,28 @@ def convertir_iso8859(dfinal):
     codecs.register_error('unidecode_fallback', unidecode_fallback)
 
     registros = "\n".join(registros)
+    print(type(registros))
     s = registros.encode('iso-8859-1', errors='unidecode_fallback')
     #print(s.decode('iso-8859-1'))
     resultado = s.decode('iso-8859-1')
+    return resultado
 
+def save_to_file(texto):
     ### Guardar en fichero de texto
     date = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = "modelo182-" + EJERCICIO + "-" + date + ".txt"
-    # with open(filename, 'w') as out:
-        # out.write(resultado)
+    with open(filename, 'w') as out:
+        out.write(texto)
 
     print(usuarios_error)
-    return filename, resultado
+    return filename
 
+def add_stats(key, value, description):
+    stats[key] = (value, description)
 
+def get_stats():
+    return stats
+    
 # In[22]:
 
 

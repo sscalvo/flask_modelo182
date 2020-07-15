@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
 
-def handle_files(folder, files):
+def handle_upload_files(folder, files):
     paths = []
     for file in files.getlist('year'):
         path = os.path.join(folder, secure_filename(file.filename))
