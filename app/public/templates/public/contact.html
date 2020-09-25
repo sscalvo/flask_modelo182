@@ -1,0 +1,67 @@
+{% extends "base_template.html" %} 
+{% block title %}Contactar{% endblock %}
+{% block content %}
+  <center>
+    <div id="container">
+
+      <div id="container">
+	  
+	  <div class="row justify-content-center">
+		<img width="135" height="149" src="{{url_for("static",filename="img/aeat.png")}}"  />
+		<div id="cabecera" class="col-md-7" >Contactar..</div>
+	  </div>
+  
+      <div class="container contact">
+      <div class="row justify-content-center contact-fields">
+
+
+        <div class="col-md-6 col-md-offset-3">
+		{% if success %}
+			<div class="alert alert-info">Tu mensaje ha sido entregado.</div>
+		{% else %}
+		    <div id="subcabecera">
+				<p>Gracias por hacer uso del Generador del Modelo 182
+				<br />Tu feedback es bienvenido!</p>
+			</div>
+			{% for message in form.nombre.errors %}
+				<div class="flash alert alert-danger">{{ message }}</div>
+			{% endfor %}
+			{% for message in form.email.errors %}
+				<div class="flash alert alert-danger">{{ message }}</div>
+			{% endfor %}
+			{% for message in form.titulo.errors %}
+				<div class="flash alert alert-danger">{{ message }}</div>
+			{% endfor %} {% for message in form.mensaje.errors %}
+				<div class="flash alert alert-danger">{{ message }}</div>
+			{% endfor %}
+        <form action="{{url_for("public.contact")}}" method="post" name="contact" role="form">
+		{{form.hidden_tag()}}
+        <div class="form-inline row">
+          <div class="form-group col-sm-6">{{ form.nombre(class="form-control", placeholder="Tu nombre", **{"data-validation":"required"}) }}</div>
+        </div>
+        <br />
+        <div class="from-group">
+          <div class="input-group">
+          <div class="input-group-addon"></div>{{ form.email(class="form-control", placeholder="Tu email",
+          **{"data-validation":"email"}) }}</div>
+        </div>
+        <br />
+        <div class="form-group">{{ form.titulo(class="form-control", placeholder="Asunto", **{"data-validation":"required"}) }}</div>
+        <div class="form-group">{{ form.mensaje(class="form-control", placeholder="Mensaje..", **{"data-validation":"required"}) }}</div>
+        <div class="form-inline row">
+          <div class="form-group col-sm-6 col-sm-offset-6">{{ form.submit(class="btn btn-default btn-block") }}</div>
+        </div></form></div>
+        <!-- ./col-md-6 -->
+      </div><!-- ./ row -->
+      {% endif %}</div>
+      <!-- ./ contact -->
+    </div>
+	      <div id="container">
+        <div id="cabecera">
+			<p>&nbsp;<p/>
+			<p>&nbsp;<p/>
+		</div>
+      </div>
+	  
+  </center>{% endblock %}</body>
+</html>

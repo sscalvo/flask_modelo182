@@ -1,0 +1,207 @@
+{% extends "base_template.html" %}
+
+{% block title %}Generador MODELO 182{% endblock %}
+{% block extra_head %}
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/result.css') }}" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<meta http-equiv="refresh" content="5;URL='/downloads/{{filename_result}}'" />
+{% endblock %}
+{% block content %}
+	<center>
+	<div id="container">
+
+		<div class="bs"><strong>Muy bien!</strong> El fichero se descargará en unos instantes. ¿No funciona? Intenta <a href="/downloads/{{filename_result}}" target="blank">descargar de nuevo.</a></div>
+		
+		<div id="container">
+			<div id="cabecera">
+				<img src="{{ url_for('static',filename='img/aeat.png') }}" width="100"/> Descargando..
+			</div>
+		</div>
+		
+		<div id="subcabecera">
+				<div><p>Mientras tu fichero se descarga, te invitamos a echar un vistazo a la galería<br/> de gráficos y análisis que hemos preparado. Esperamos que sea de tu interés.</p>
+			  </div>
+		</div>
+	</div>
+	
+	<div class="chart-container">
+		<div class="izquierda" id="chart-0-description"></div>
+		<div class="derecha">
+			<canvas id="chart-0"></canvas>
+		</div>
+	</div>
+	
+	<div class="chart-container">
+		<div class="izquierda" id="chart-1-description"></div>
+		<div class="derecha">
+			<canvas id="chart-1"></canvas>
+		</div>
+	</div>
+	
+    </center>
+    <script>
+		var charts = {{charts | tojson}};
+		console.log(charts)
+		
+		<!-- var imgBar = new Image(); -->
+		<!-- img.src = "/static/img/favicon.ico"; -->
+		
+		
+		
+		
+    $(document).ready(function() { 
+		<!-- console.log("######  llamando a zero"); -->
+		plotChart(charts[0], 0, "bar");
+		<!-- console.log("###### llamando a uno"); -->
+		plotChart(charts[1], 1, "bar");
+		//barIcons();
+    });
+ 
+	function plotChart(myChartData,indice, charType	){
+		<!-- console.log(myChartData); -->
+		$("#chart-" + indice + "-description").html(myChartData.description);
+		chart = new Chart(document.getElementById("chart-" + indice), {
+			type: charType,
+			data: {
+				labels: myChartData.labels,
+				datasets: [{
+					label: "Donaciones",
+					backgroundColor: ["#F5F165", "#FFCF31", "#FF9B33","#F87146","#EC6365","#F257B3","#C755F1","#7950F6","#95F76E","#53E37C","#53B56F"],
+					data: myChartData.values
+				}]
+			},
+			options: {  
+				tooltips : {
+					enabled: true,
+					mode: 'index',
+					callbacks : { // HERE YOU CUSTOMIZE THE LABELS
+						title : function() {
+							return '';
+						},
+						//beforeLabel : function(tooltipItem, data) {
+						//	return '***** Test *****'+ tooltipItem.yLabel;
+						//},
+						label : function(tooltipItem, data) {
+							return myChartData.descriptions[tooltipItem.index]; // WARNING: 'tooltips' is a CUSTOM field
+						},
+						afterLabel : function(tooltipItem, data) {
+							<!-- console.log(tooltipItem); -->
+							return myChartData.tooltips[tooltipItem.index]; // WARNING: 'tooltips' is a CUSTOM field
+						}
+					}
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: { display: false },
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: myChartData.label_xAxes,
+						},
+						display: true,
+							ticks: {
+								beginAtZero:true
+							},      
+						}],
+						
+						
+					<!-- yAxes: [{ -->
+							<!-- display: true, -->
+							<!-- ticks: { -->
+								<!-- beginAtZero:true -->
+							<!-- },         -->
+						<!-- }] -->
+						
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: myChartData.label_yAxes,
+						},
+						type: myChartData.custom_yAxes_type,
+						position: 'left',
+						ticks: {
+							min: 0.1,
+							max: Math.max.apply(null, myChartData.values) + Math.max.apply(null, myChartData.values)*0.1,
+							callback: function (value, index, values) {
+								return Number(value.toString());//pass tick values as a string into Number function
+							}
+						},
+						afterBuildTicks: function (chartObj) { //Build ticks labelling as per your need
+							//chartObj.ticks = [];
+							chartObj.ticks.shift() //Remove last tick (the extra 10% we gave a few lines above), since it's confusing
+							if(chartObj.type ==  'logarithmic'){
+									chartObj.ticks = []
+								for(var i=0; i<6; i++)
+									chartObj.ticks.push(Math.pow(10,i)); //imprimir unos cuantos 
+							}else{ //'linear'
+								
+							}
+							chartObj.ticks.push(Math.max.apply(null, myChartData.values));
+						}
+					}]
+
+				},  
+				title: {
+					display: true,
+					text: myChartData.title
+				}
+			}
+		});
+		
+	}
+	
+	<!-- function set(path, value) { -->
+		<!-- var schema = chartN;  // a moving reference to internal objects within obj -->
+		<!-- var pList = path.split('.'); -->
+		<!-- var len = pList.length; -->
+		<!-- for(var i = 0; i < len-1; i++) { -->
+			<!-- var elem = pList[i]; -->
+			<!-- if( !schema[elem] ) schema[elem] = {} -->
+			<!-- schema = schema[elem]; -->
+		<!-- } -->
+		<!-- schema[pList[len-1]] = value; -->
+	<!-- } -->
+	
+	<!-- function barIcons() { -->
+		<!-- new Chart("chart", { -->
+			<!-- type: "bar", -->
+			<!-- data: { -->
+			<!-- labels: ["A", "B", "C"], -->
+			<!-- datasets: [{ -->
+				<!-- data: [98.2, 97.7, 94.1], -->
+				<!-- icons: ['\uf0c3', '\uf0e7', '\uf2dc'] -->
+			<!-- }] -->
+			<!-- }, -->
+			<!-- options: { -->
+			<!-- animation: false, -->
+			<!-- legend: false, -->
+			<!-- tooltips: false, -->
+			<!-- layout: { -->
+				<!-- padding: 24 -->
+			<!-- }, -->
+			<!-- elements: { -->
+				<!-- rectangle: { -->
+				<!-- backgroundColor: "#cc55aa" -->
+				<!-- } -->
+			<!-- }, -->
+			<!-- plugins: { -->
+				<!-- datalabels: { -->
+				<!-- align: 'end', -->
+				<!-- anchor: 'end', -->
+				<!-- color: "#cc55aa", -->
+				<!-- font: { -->
+					<!-- family: 'FontAwesome', -->
+					<!-- size: 20 -->
+				<!-- }, -->
+				<!-- formatter: function(value, context) { -->
+					<!-- return context.dataset.icons[context.dataIndex]; -->
+				<!-- } -->
+				<!-- } -->
+			<!-- } -->
+		<!-- } -->
+	<!-- }); -->
+<!-- }	 -->
+		
+	</script>
+{% endblock %}

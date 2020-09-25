@@ -1,0 +1,176 @@
+body, html {
+	height: 100%;
+}
+/*
+@font-face{
+	font-family: 'Humor Sans';
+	src: url('fonts/Humor-Sans-1.0.ttf');
+}
+*/
+
+@font-face{
+	font-family: 'Montserrat';
+	src: url('fonts/Montserrat-Regular.ttf');
+}
+
+
+/* 	font-family: 'Montserrat', sans-serif; */
+body {
+	background: #FFFFFF;
+	margin: 200;
+	display: grid;
+	grid-template-rows: auto;
+	justify-items: center;
+	align-items: center;
+}
+
+h2 {
+
+	text-shadow: 2px 2px rgba(255, 255, 255, 0.39), 3px 3px rgba(0, 0, 0, 0.19);
+	margin: 0;
+}
+	
+/*************************************************
+ * ANIMATION
+ **************************************************/
+.animate {
+	-webkit-animation-name: ANIMATE;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes ANIMATE {
+
+    0% {
+        top: 72px;
+    }
+    
+    40% {
+        /* anticipation */
+        top: 57px;
+    }
+    
+    70% {
+        /* hold */
+        top: 56px;
+    }
+
+    80% {                
+        /* release */
+        top: 112px;
+    }
+    
+    100% {
+        /* return */
+        top: 72px;
+    }
+}
+
+/*************************************************
+ * Boton animado intro
+ **************************************************/
+#wrap { 
+    width: 476px; 
+    margin: 0 auto; 
+    position: relative;
+    padding: 263px 0 0;
+}
+
+#button { 
+    display: block;
+    text-indent: -9999px;
+    width: 147px;
+    height: 149px;
+    background: transparent url(../img/click-here.png) no-repeat 0 0;
+    position: absolute;
+    top: 72px;
+    left: 155px;
+}
+	
+#button:hover, #button:focus {
+    background-position: 0 -149px;
+}
+
+#main { 
+    border-top: 1px solid rgba(0, 0, 0, 0.2); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    color: rgba(255, 255, 255, 0.8); 
+    font-style: italic; 
+    font-size: 14px;        
+    line-height: 2;
+    text-align: center; 
+    margin: 0 0 2em;
+}
+
+#main .inner {
+    padding: 3em 0;
+}        
+
+
+	
+/*************************************************
+ * HAND DRAWN formulario
+ **************************************************/
+button {
+      background:transparent;
+      padding:0.5rem 0.5rem;
+      margin:0 0.5rem;
+      font-size:1rem;
+
+      border-top-left-radius: 255px 15px;
+      border-top-right-radius: 15px 225px;
+      border-bottom-right-radius: 225px 15px;
+      border-bottom-left-radius:15px 255px;
+}
+
+input {
+      background:transparent;
+      padding:0.5rem 0.5rem;
+      margin:0 0.5rem;
+      font-size:1rem;
+
+      border-top-left-radius: 255px 15px;
+      border-top-right-radius: 15px 225px;
+      border-bottom-right-radius: 225px 15px;
+      border-bottom-left-radius:15px 255px;
+}
+div{
+  width:100%; 
+  margin-top:2%; 
+  text-align:center;
+}
+
+input{
+  width:10%;
+  border-radius: 225px 55px 155px 35px/35px 225px 15px 255px;
+  padding:0.31em;
+  line-height:1.5em;
+  background:hsla(67, 95%, 95%, 1);
+}
+#one {
+  width:9.5%;
+    border-radius: 155px 25px 125px 25px/15px 225px 35px 155px;
+}
+#two{
+  width:10.5%;
+     border-radius: 35px 25px 22px 55px/125px 55px 155px 35px;
+}
+
+button {
+      background:transparent;
+      padding:0.5rem 0.5rem;
+      margin:0 0.5rem;
+      font-size:1rem;
+
+      border-top-left-radius: 255px 25px;
+      border-top-right-radius: 15px 225px;
+      border-bottom-right-radius: 225px 25px;
+      border-bottom-left-radius:15px 255px;
+}
+button:hover{
+   box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+}
+button.lined.thick{
+   border:solid 3px #41403E;
+    background:rgba(80%, 80%, 80%, 0.7);
+}

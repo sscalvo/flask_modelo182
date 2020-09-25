@@ -1,4 +1,3 @@
-*.csv
 *.txt
-uploads/*
-downloas/*
+*.ttf
+config/*

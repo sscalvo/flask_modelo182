@@ -1,0 +1,205 @@
+{% extends "base_template.html" %}
+
+{% block title %}Generador MODELO 182{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <p style="color: red;"><strong>Error:</strong> {{ error }}
+    {% endif %}
+	
+	<img id='imgAvatar' src='../static/img/aeat.png?32352' class='avatar'/>
+	<center> 
+	<div id="subcabecera"> .</div>
+		<div id="cabecera">
+			Modelo 182 - Generador
+		</div>
+		<div id="subcabecera">
+			<p>Este formulario recoge el fichero CSV<sup>1</sup> que contiene los datos de los donantes de este año (o este <i>ejercicio</i>), así como, opcionalmente, los ficheros 
+			ya presentados a Hacienda en los dos ultimos años y los procesa para generar 
+			el <b>fichero <i>modelo 182</i></b> de este <i>ejercicio</i>, siguiendo las pautas establecidas
+			 por la Agencia Tributaria<sup>2</sup> 
+			</p>
+			<p>Para facilitarle la labor, conforme agregue los ficheros de los años anteriores, algunos campos del formulario se irán rellenando automáticamente con
+			datos extraídos de los propios ficheros. En cualquier caso, siempre debe revisar que todos los campos contienen los valores apropiados y actuales antes de enviar 
+			el formulario.
+			</p>
+			<p>Después del procesado, la aplicación elimina todos los ficheros y datos enviados y descarga automáticamente el <b>fichero resultado</b>, ya listo para presentar a Hacienda.
+			</p>
+			<p>Adicionalmente, si así lo desea, puede usar las 
+				<a href="https://www.agenciatributaria.es/AEAT.internet/Inicio/_otros_/Descarga_de_programas_de_ayuda/Prevalidacion_Cobol/Ejercicio_2014/Programas_de_prevalidacion_Cobol_Windows/Programas_de_prevalidacion_Cobol_Windows.shtml">herramientas de pre-validación</a>
+				ofrecidas por la AEAT para verificar la validez del <b>fichero resultado</b> antes de presentarlo a Hacienda.
+			</p>
+		</div>
+   	</center>
+	<div class="to_show">
+	<center>
+	{#<form id='payment'  accept-charset="UTF-8" action="{{ url_for('form_redirect') }}" method="POST" enctype="multipart/form-data" novalidate>#}
+    <form id='mod182' action="" method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+		<fieldset>
+			<legend>Ficheros necesarios</legend>
+			<ol>
+				<li id="liexport0">
+					{{ form.fileYear0.label() }}
+					{{ form.fileYear0( **{"onchange":"getEjercicio(this, 'fileYear0')"} ) }}<br>
+					{% for error in form.fileYear0.errors %}
+					<span class="btn-sm btn-danger">{{ error }}</span>
+					{% endfor %}
+				</li>
+			</ol>
+		</fieldset>
+			<fieldset>
+				<legend>Ficheros opcionales</legend>
+				<ol>
+					<li id="liexport1">
+						{{ form.fileYear1.label() }}
+						{{ form.fileYear1( **{"onchange":"getEjercicio(this, 'fileYear1', populateForm)"} ) }}<br>
+						{% for error in form.fileYear1.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+					<li  id="liexport2">
+						{{ form.fileYear2.label() }}
+						{{ form.fileYear2( **{"onchange":"getEjercicio(this, 'fileYear2')"} ) }}<br>
+						{% for error in form.fileYear2.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+				</ol>
+			</fieldset>			
+			<fieldset>
+				<legend>Datos adicionales</legend>
+				<ol>
+					<li>
+					    {{ form.ejercicio.label }}
+						{{ form.ejercicio(size=64, placeholder="2021") }}<br>
+						{% for error in form.ejercicio.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+					<li>
+						{{ form.NIF.label }}
+						{{ form.NIF(size=64, placeholder="12345678Z") }}<br>
+						{% for error in form.NIF.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+					<li>
+						{{ form.denominacion.label }}
+						{{ form.denominacion(placeholder="Fundación XYZ") }}<br>
+						{% for error in form.denominacion.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+					<li>
+						{{ form.telefono.label }}
+						{{ form.telefono(placeholder="600555444") }}<br>
+						{% for error in form.telefono.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}
+					</li>
+					<li>
+						{{ form.persona.label }}
+						{{ form.persona(placeholder="Ana García") }}<br>
+						{% for error in form.persona.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}						
+					</li>	
+					<li>
+						<fieldset>
+							<legend>Tipo de Declaración</legend>
+							<ol>
+								{% for subfield in form.tipoDeclaracion %}
+									<li>
+										{{ subfield }}
+										{{ subfield.label }}
+									</li>
+								{% endfor %}
+								{% for error in form.tipoDeclaracion.errors %}
+								<span class="btn-sm btn-danger">{{ error }}</span>
+								{% endfor %}
+							</ol>
+						</fieldset>
+					</li>
+					<li>
+						{{ form.justificante.label }}
+						{{ form.justificante(placeholder="0000000000073") }}<br>
+						{% for error in form.justificante.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}		
+					</li>
+					<li>
+						{{ form.idAnterior.label }}
+						{{ form.idAnterior(placeholder="0000000000000") }}<br>
+						{% for error in form.idAnterior.errors %}
+						<span class="btn-sm btn-danger">{{ error }}</span>
+						{% endfor %}	
+					</li>
+				</ol>
+			</fieldset>
+			<fieldset>
+				{{ form.submit() }}
+				<!-- <button type=submit>Generar fichero Modelo182</button> -->
+			</fieldset>
+		</form>
+	</center>
+               
+    </div><!-- /.to_show -->		
+		
+    </form>
+	
+ 	<center>
+		<div id="subscripters">
+			<p><sup>1</sup>: Columnas del CSV deben estar en este orden (no importa el nombre de los campos): <br/><b>['National Id', 'Family Name', 'Given Name', 'Address State', 'Donation Amount', 'Currency'] </b>Por hacer: auto-matching 
+			<p><sup>2</sup>: Especificaciones oficiales del Formato del <i>modelo 182</i> 
+				<a href="https://www6.aeat.es/static_files/common/internet/dep/aplicaciones/modelos/2017/Modelo182.pdf">aqui</a> 
+			</p>
+		</div>
+    </center>	
+	
+    <script>
+    
+        $(document).ready(function() { 
+            <!-- Popovers are opt-in for performance reasons, so you must initialize them yourself -->
+			$('[data-toggle="popover"]').popover();
+        });
+
+		function populateForm(content){ <!-- solo usada por fileChooser "elcsv"  -->
+			<!-- Populando el formulario aprovechando los datos del año anterior -->
+			document.getElementById("ejercicio").value = parseInt(content.substring(4,8)) + 1;
+			document.getElementById("NIF").value = content.substring(8,17);
+			document.getElementById("denominacion").value = content.substring(17,56).trim();
+			document.getElementById("telefono").value = content.substring(58,67);
+			document.getElementById("persona").value = content.substring(67,106).trim();
+		}
+
+		<!-- getEjercicio(): Se usa para los 3 FileChoosers. El 2º está mas parametrizado ya que tiene  -->
+		<!-- que invocar a 'populate' y añadir info extra en el popover -->
+		function getEjercicio(fileChooser, lblPopover, f) {
+			let file = fileChooser.files[0];
+			var reader = new FileReader();
+			reader.readAsText(file,'UTF-8');
+
+			reader.onload = readerEvent => {
+				var content = readerEvent.target.result; // this is ALL the content
+				var match = content.match(/\r?\n/g);
+				num_lines = match.length;
+				title = "<b>Fichero " + file.name + "</b>"
+				
+				if(typeof f != "undefined"){ <!-- year1 -->
+					f(content); 
+				}else{ <!-- elcsv & year2 -->
+					<!-- borrar este else dentro de poco si no le encuentras mas utilidad -->
+				}
+
+				$('#' + lblPopover).popover({title: title, content: "Contiene " + (parseInt(num_lines)-1) + " registros", html: true});
+				$('#' + lblPopover).popover('show');
+				setTimeout(function() { 
+					$('#' + lblPopover).popover('hide'); 
+					$('#' + lblPopover).popover('dispose'); 
+				}, 3000);
+		}
+	}
+	</script>
+	
+{% endblock %}

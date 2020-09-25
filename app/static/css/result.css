@@ -1,0 +1,82 @@
+body {
+	/* background-image: url("../img/mz_palette.png"); */
+	background: transparent url(../img/mz_palette.png) no-repeat 0 0;
+	background-size: 500px 433px;
+	background-repeat: no-repeat;
+	min-height: 50vh
+}
+
+#container{
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#cabecera{
+	/* margin: 0 auto;  */
+	font-size: 56px;
+	text-align: center;
+	margin-top: 20px; 
+	/* width: 100%; */
+	font-family: 'Fredericka the Great', cursive;
+	text-shadow: 0 5px 5px rgba(0, 112, 187, 0.5);
+	/* padding: 50px; */
+	display: inline;
+}
+
+#subcabecera{
+	padding: 20px;
+	/* margin: 0 auto;  */
+	text-align: center;
+	/* margin: 50px 0 0 0;  */
+	/* width: 900px; */
+	display: inline;
+}
+
+div.bs { /*background-shadow */
+
+
+	margin: 80px 150px 0px 150px;
+ /* width:80%; */
+    background:#88ffd1;
+	box-shadow: 0 16px 24px 2px rgba(29,17,51,.04), 0 6px 32px 4px rgba(9,32,77,.12), 0 8px 12px -5px rgba(29,17,51,.12);
+	-moz-box-shadow: 0 16px 24px 2px rgba(29,17,51,.04), 0 6px 32px 4px rgba(9,32,77,.12), 0 8px 12px -5px rgba(29,17,51,.12);
+	-webkit-box-shadow: 0 16px 24px 2px rgba(29,17,51,.04), 0 6px 32px 4px rgba(9,32,77,.12), 0 8px 12px -5px rgba(29,17,51,.12);
+	border-radius: 5px;
+
+	padding: 16px 8px;
+	/* padding-top: 180px; */
+    text-align: center;
+	/* display: inline; */
+
+  /* width: 70vh; */
+}
+
+/* chartjs */
+.chart-container {
+  width: 90%;
+  /* height: 350px; */
+  /* background: aqua; */
+  margin: 50px;
+  padding: 50px;
+  /* text-align: justify; */
+}
+
+.izquierda{
+  height: 300px;
+  width: 45%;
+  /* background: red; */
+  float: left;
+  margin-left: 5%;
+  padding-left: 40px;
+  padding-top: 40px;
+  margin-top: 40px;
+}
+
+.derecha{
+  height: 350px;
+  width: 400px;
+  margin-left: 35%;
+  /* background: orange; */
+  padding-left: 0px;
+}

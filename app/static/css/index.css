@@ -1,0 +1,338 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    /* font: 'Humor_Sans'; */
+    /* min-width: 600px; */
+
+
+	font-family: 'Roboto', sans-serif;
+	background: -moz-linear-gradient(-15deg, rgba(255, 255, 255, 1) 40%, rgba(237, 185, 1, 0.7) 60%);
+	background: -webkit-linear-gradient(-15deg, rgba(255, 255, 255,1) 40%, rgba(237, 185, 1, 0.7) 60%);
+	background: linear-gradient(170deg, rgba(255, 255, 255, 1) 40%, rgba(237, 185, 1, 0.7) 60%);
+	background-attachment: fixed;
+	padding-top: 65px; 
+}
+
+@font-face{
+
+	/* src: url('http://localhost:5000/static/fonts/Humor-Sans-1.0.ttf'); */
+	/* src: url('fonts/Montserrat-Regular.ttf'); */
+
+
+}
+
+.grancabecerah1{
+	/* margin: 0 auto;  */
+	font-size: 256px;
+	text-align: center;
+	margin-top: 20px; 
+	/* width: 100%; */
+	font-family: 'Fredericka the Great', cursive;
+	text-shadow: 0 5px 5px rgba(0, 112, 187, 0.5);
+	/* padding: 50px; */
+	display: inline;
+}
+.grancabecerah3{
+	/* margin: 0 auto;  */
+	font-size: 56px;
+	text-align: center;
+	margin-top: 20px; 
+	/* width: 100%; */
+	font-family: 'Fredericka the Great', cursive;
+	text-shadow: 0 5px 5px rgba(0, 112, 187, 0.5);
+	/* padding: 50px; */
+	display: inline;
+}
+
+.navbar{
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #555;
+background-color: #0C0786;
+  min-height: 30px;
+
+}
+
+
+
+.navbar-brand {
+  padding: 0 0px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.navbar-brand {
+  padding: 0 0px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 3px;
+  padding: 0px 0px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    padding-top: 22px;
+    padding-bottom: 15px;
+    line-height: 9px;
+  }
+}
+
+
+#logo{
+	margin: 0; 
+    padding: 0; 
+	width: 46px;
+}
+
+
+
+/* @font-face { */
+  /* font-family: 'Amatic SC'; */
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  /* src: local('Amatic SC Regular'), local('AmaticSC-Regular'), url(https://fonts.gstatic.com/s/amaticsc/v13/TUZyzwprpvBS1izr_vOEDuSfQZQ.woff2) format('woff2'); */
+  /* unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; */
+/* } */
+
+
+
+/***** animacion del avatar, con sombra ******/
+@keyframes flotando {
+	0% {
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		-webkit-filter: drop-shadow(5px 10px 10px #222);
+		filter: drop-shadow(5px 10px 10px #222);
+		transform: translatey(0px);
+	}
+	50% {
+		/* box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
+		-webkit-filter: drop-shadow(5px 30px 15px #222);
+		filter: drop-shadow(5px 30px 15px #222);
+		transform: translatey(-12px);
+	}
+	100% {
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		-webkit-filter: drop-shadow(5px 10px 10px #222);
+		filter: drop-shadow(5px 10px 10px #222);
+		transform: translatey(0px);
+	}
+}
+
+.validation_error {
+	/* background-color: #eeaba3; */
+	border-color: #eeaba3;
+	text-shadow: 3px 3px 3px rgba(200, 100, 100, 1);
+}
+
+.avatar {
+	position: fixed;
+    top: 100px;
+    left: 155px;
+    width: 135px;
+    height: 149px;
+	transform: translatey(0px);
+	animation: flotando 6s ease-in-out infinite;
+	img { width: 100%; height: auto; }
+	/* sombrear lo transparente */
+	-webkit-filter: drop-shadow(5px 5px 5px #222);
+	filter: drop-shadow(5px 5px 5px #222);
+}
+
+/***** FIN animacion del avatar, con sombra ******/
+#cabecera{
+	/* margin: 0 auto;  */
+				font-size: 56px;
+text-align: justify;
+	margin: 50px 0 0 0; 
+	width: 700px;
+	font-family: 'Fredericka the Great', cursive;
+	text-shadow: 0 5px 5px rgba(0, 112, 187, 0.5);
+}
+
+#subcabecera{
+	/* margin: 0 auto;  */
+text-align: justify;
+	margin: 0px 0 0 0; 
+	width: 700px;
+}
+
+#subscripters{
+	font-size: 10px;
+	text-align: justify;
+	margin: 50px 0 0 0; 
+		width: 700px;
+}
+
+.to_show{	
+
+
+}
+
+form#mod182 {
+	/* background: #1894D2; */
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	counter-reset: fieldsets;
+	padding: 10px;
+    /* display: inline; */
+	width: 700px;
+	}
+	
+	form#mod182 fieldset {
+		border: none;
+		margin-bottom: 10px;
+		}
+	
+	form#mod182 fieldset:last-of-type {
+		margin-bottom: 0;
+		}
+		
+		form#mod182 legend {
+							/* border: dotted; */
+			/* color: rgba(0, 112, 187, 1); */
+			font-size: 16px;
+			padding-bottom: 10px;
+			text-shadow: 0 1px 1px rgba(0, 112, 187, 1);
+				/* font-family: 'Fredericka the Great'; */
+			}
+			
+			form#mod182 > fieldset > legend:before {
+				content: "Paso " counter(fieldsets) ": ";
+				counter-increment: fieldsets;
+				}
+			
+			form#mod182 fieldset fieldset legend {
+								/* border: dotted; */
+			
+				color: #111111;
+				font-size: 13px;
+				font-weight: normal;
+				padding-bottom: 0;
+				}
+		
+		form#mod182 ol li {
+			background: #b9cf6a;
+			background: rgba(255,255,255,.3);
+			border-color: #e3ebc3;
+			border-color: rgba(255,255,255,.6);
+			border-style: solid;
+			border-width: 2px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-khtml-border-radius: 5px;
+			border-radius: 5px;
+			line-height: 30px;
+			list-style: none;
+			padding: 5px 10px;
+			margin-bottom: 2px;
+			
+			}
+			
+			form#mod182 ol ol {
+				background: none;
+				float: left;
+				margin: 0 50px 10px 50px; /* para centrar "ol ol li" */
+			}
+			
+			form#mod182 ol ol li {
+				/* background: none; */
+				/* border: dotted; */
+				float: left;
+				margin: 0 0 0 50px;
+			}
+		
+		form#mod182 label {
+			float: left;
+			font-size: 13px;
+			width: 200px;
+										/* border: dotted; border: 1; */
+			}
+			
+			
+			
+			
+		form#mod182 fieldset fieldset label {
+							/* border: dotted; */
+			/* background:none no-repeat left 50%; */
+			line-height: 15px;
+			/* padding: 0 0 0 0; */
+			margin: 0 10px 0 0;
+			width: 10%;
+			display: inline;
+			float: left;
+			}
+				
+			/* form#mod182 label[for=visa] { */
+				/* background-image: url(visa.gif); */
+				/* } */
+			/* form#mod182 label[for=amex] { */
+				/* background-image: url(amex.gif); */
+				/* } */
+			/* form#mod182 label[for=mastercard] { */
+				/* background-image: url(mastercard.gif); */
+				/* } */
+				
+			/* form#mod182 fieldset fieldset label:hover { */
+				/* cursor: pointer; */
+				/* } */
+			
+		form#mod182 input:not([type=radio]),
+		form#mod182 textarea {
+			background: #ffffff;
+			border: none;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			-khtml-border-radius: 3px;
+			border-radius: 3px;
+			font: italic 13px Georgia, "Times New Roman", Times, serif;
+			outline: none;
+			padding: 5px;
+			width: 250px;
+			display:none
+							border: dotted; border: 1;
+			}
+				
+			form#mod182 input:not([type=submit]):focus,
+			form#mod182 textarea:focus {
+				background: #eaeaea;
+											/* border: dotted; border: 1; */
+				}
+				
+			form#mod182 input[type=radio] {
+				float: left;
+				display: inline;
+				margin-right: 5px;
+				}
+					
+		form#mod182 #submit {
+			background: rgba(0, 76, 128,1);
+			border: none;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-khtml-border-radius: 5px;
+			border-radius: 5px;
+			color: #ffffff;
+			/* display: block; */
+			/* font: 18px Georgia, "Times New Roman", Times, serif; */
+			letter-spacing: 1px;
+			margin: auto;
+			padding: 7px 25px;
+			text-shadow: 0 1px 1px #000000;
+			text-transform: uppercase;
+			}
+				
+			form#mod182 button:hover {
+				background: rgba(0, 112, 187, 1);
+				cursor: pointer;
+				}
+

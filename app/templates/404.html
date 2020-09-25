@@ -1,0 +1,35 @@
+{% extends 'base_template.html' %}
+{% block content %}
+   
+	<div id="container">
+		<div class="row parent404">	
+			<div class="col-3">
+				
+			</div>
+			<div class="col-3">
+				<h4 class="grancabecerah1">404</h4>
+			</div>
+			<div class="col-3">
+				<img class="imageTop404" src="{{ url_for('static',filename='img/404.gif') }}" width="384" height="384" alt="" >
+			</div>
+			<div class="col-3">
+			</div>
+		</div>
+		<div class="row parent404">	
+			<div class="col-3">
+			</div>
+			<div class="col-6">
+				<h4 class="grancabecerah3">Página no encontrada!</h4>
+			</div>
+			<div class="col-3">
+			</div>
+		</div>
+		<div class="row parent404">	
+			<div class="col-12">
+				<h4 class="grancabecerah3">&nbsp;</h4>
+			</div>
+
+		</div>
+	</div>
+		
+{% endblock %}
