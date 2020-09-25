@@ -1,1 +1,1 @@
-web: gunicorn app:entrypoint
+web: gunicorn entrypoint:app
