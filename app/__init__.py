@@ -13,11 +13,11 @@ def registrar_error_handlers(app):
         return render_template('404.html'), 404
 
 
-def create_app(settings_module='config.development'):
+def create_app(settings_module='config.prod'):
     app = Flask(__name__)
     app.config.from_object(settings_module)
-
     mail.init_app(app)  # 3. Inicializamos el objeto mail
+    app.extensions['mail'].debug = app.config["MAIL_DEBUG_LEVEL"] # https://stackoverflow.com/questions/58309600/disable-logging-in-flask-mail-when-sending-message
    
     #cors = CORS(app)
     #app.config['CORS_HEADERS'] = 'Content-Type'
