@@ -3,7 +3,6 @@
 #Code tells you how; Comments tell you why."
 #Esto proviene de un cuaderno jupyter alojado en https://github.com/sscalvo/jupyter_modelo182
 import pandas as pd
-from matplotlib import pyplot as plt
 import numpy as np
 import datetime
 
@@ -11,7 +10,6 @@ from builtins import str
 import unidecode
 import codecs
 import os
-from matplotlib import cm
 import json
 # ### Definicion de Funciones propias ```validate_DNI_NIE()``` ```extract_DNI_dana()```
 
