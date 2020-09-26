@@ -1,3 +1,4 @@
 *.txt
 *.ttf
-config/*
+# comment config/* only for heroku
+# config/*
