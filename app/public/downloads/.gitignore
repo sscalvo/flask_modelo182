@@ -2,4 +2,4 @@
 *
 # Except this file
 !.gitignore
-!ejemplo_donantes.txt
+!ejemplo_donantes.csv
