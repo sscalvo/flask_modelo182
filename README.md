@@ -1,7 +1,8 @@
 # flask_modelo182
 Aplicación web que recibe un csv con los datos de los donantes y (opcionalmente) los ficheros presentados a Hacienda en los dos años anteriores y devuelve el modelo 182 a presentar este año.
+Si se incluyen los ficheros presentados en los dos años anteriores, el modelo 182 generado calculará las correspondientes desgravaciones de los donantes recurrentes.
 
-## Pagina web:
+## Pagina web funcionando:
 <a href="http://modelo182.sscalvo.com">modelo182.sscalvo.com</a>
 
 ## Instalación en Heroku
