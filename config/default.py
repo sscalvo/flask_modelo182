@@ -7,6 +7,7 @@ from flask.helpers import get_root_path
 BASE_DIR           = dirname(dirname(abspath(__file__)))
 DIR_STATIC         = os.path.join(get_root_path('app.public'), 'static' ) 
 DIR_DOWNLOADS      = os.path.join(get_root_path('app.public'), 'downloads' ) 
+DIR_UPLOADS        = os.environ['DIR_UPLOADS'] 
 
 SECRET_KEY         = os.environ['SECRET_KEY']
 ALLOWED_EXTENSIONS = ['txt', 'csv', 'tsv']
@@ -40,4 +41,5 @@ APP_ENV_PRODUCTION = 'production'
 APP_ENV = ''
 
 print("#################  ", MAIL_USERNAME, " ################")
-print("#################  ", MAIL_USERNAME, " ################")
+print("#################  ", DIR_DOWNLOADS, " ################")
+print("#################  ", DIR_UPLOADS, " ################")

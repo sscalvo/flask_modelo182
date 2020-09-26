@@ -15,7 +15,7 @@ from .modelo182 import convertir_iso8859, save_to_file, get_stats
 
 
 
-@public_bp.route('/modelo182/', methods = ['GET', 'POST'])   
+@public_bp.route('/', methods = ['GET', 'POST'])   
 def datos():
     ''' PASO 1: Recoge datos del form, los procesa, genera el mod182 y redirige a column-matching page
     '''
@@ -40,8 +40,8 @@ def datos():
         #############################################################
         
         df, dfyear1, dfyear2        = load_uploaded_files(paths, params, hay_recurrencias)
-        DIR_STATIC                  = current_app.config["DIR_STATIC"]
-        dfprov, dfca                = load_local_dataframes(DIR_STATIC, params) #provincias & comunidades autónomas          
+        DIR_STATIC                  = current_app.config["DIR_STATIC"] #provincias.tsv & cautonomas.csv  
+        dfprov, dfca                = load_local_dataframes(DIR_STATIC, params)         
         linea1                      = reg_tipo1(df, params)
         ## charts ????????????
         charts                      = [] # ira guardando los charts (como json) para  enviar a Chart.js (result.html)
@@ -49,6 +49,8 @@ def datos():
         dfinal                      = unir(linea1, dflineas2)
         resultado                   = convertir_iso8859(dfinal)
         DIR_DOWNLOADS               = current_app.config["DIR_DOWNLOADS"]
+        print("#####################  DIR_DOWNLOADS = ", DIR_DOWNLOADS, " #########")
+        print("#####################  DIR_UPLOADS = ", current_app.config["DIR_UPLOADS"], " #########")
         filename                    = save_to_file(DIR_DOWNLOADS, resultado, params, session['user_id']) # hard-disk write
         stats                       = get_stats()        
 

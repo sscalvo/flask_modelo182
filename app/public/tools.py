@@ -13,14 +13,14 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Receives a client-provided filename and returns 
-# a  path in the shape: DIR_UPLOAD + uid_filename´random´ + ORIGINAL_EXTENSION
+# a  path in the shape: DIR_UPLOADS + uid_filename´random´ + ORIGINAL_EXTENSION
 # @path: ruta actual donde se encuentra el fichero subido
 # @uid: valor unico aleatoreo del identificador de usuario 
 # @cad: string que se acopla a la ruta
 def randomize_path(path, uid, cad):
     filename, file_extension = os.path.splitext(path)
     print(path)
-    save_path = os.path.join(current_app.config['DIR_UPLOAD'], uid + cad + file_extension)
+    save_path = os.path.join(current_app.config['DIR_UPLOADS'], uid + cad + file_extension)
     return save_path
 
 def handle_upload_files(form):
