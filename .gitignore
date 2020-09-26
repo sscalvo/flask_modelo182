@@ -2,3 +2,4 @@
 *.ttf
 *.pyc
 environs.bat
+heroku_vars.txt
