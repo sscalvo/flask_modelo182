@@ -38,3 +38,6 @@ APP_ENV_DEVELOPMENT = 'development'
 APP_ENV_STAGING = 'staging'
 APP_ENV_PRODUCTION = 'production'
 APP_ENV = ''
+
+print("#################  ", MAIL_USERNAME, " ################")
+print("#################  ", MAIL_USERNAME, " ################")
