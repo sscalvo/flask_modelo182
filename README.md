@@ -1,2 +1,5 @@
 # flask_modelo182
-Web GUI added to jupyter_modelo182 using flask and pyinstaller.
+Aplicación web que recibe un csv con los datos de los donantes y (opcionalmente) los ficheros presentados a Hacienda en los dos años anteriores y devuelve el modelo 182 a presentar este año.
+
+## Pagina web:
+<a href="http://modelo182.sscalvo.com">modelo182.sscalvo.com</a>
