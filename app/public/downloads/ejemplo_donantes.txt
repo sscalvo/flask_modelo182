@@ -9,5 +9,5 @@ National Id,Family Name,Given Name,Address State,Donation Amount,Currency
 02683466X,Baza Vilela,Abigail,Granada,100 €,EUR
 99410296H,Lopez Besora,Juan,Noord-Holland,150 €,EUR
 40024508T,Blanes Cintas,Christian,Granada,100 €,EUR
-43599410N,Quinteros Cava,Alfonso,Madrid,200 €,EUR
-86747193W,Solanilla Mesa,Damián,Cádiz,200 €,EUR
+AAAA,Quinteros Cava,Alfonso,Madrid,200 €,EUR
+,Solanilla Mesa,Damián,Cádiz,200 €,EUR

@@ -85,6 +85,13 @@ def download(filename):
     delete_files( paths, delay=15 ) # Delete them in 15 seconds
     session.clear() 
     return send_from_directory(DIR_DOWNLOADS, filename, attachment_filename=filename, as_attachment=True)
+        
+@public_bp.route('/sample')
+def sample():
+    # session.clear() 
+    filename="ejemplo_donantes.txt"
+    DIR_DOWNLOADS = current_app.config["DIR_DOWNLOADS"]
+    return send_from_directory(DIR_DOWNLOADS, filename, attachment_filename=filename, as_attachment=True)
 
 @public_bp.route('/contacto/', methods = ['GET', 'POST'])
 def contact():

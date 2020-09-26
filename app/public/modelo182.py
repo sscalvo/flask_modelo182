@@ -251,7 +251,8 @@ def reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, p):
     dfaux["dana0"] = dfaux["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
     # Donantes recurrentes (este añe & año pasado & hace 2 años
     mask_recurrentes = (~pd.isna(dfaux["dni2"])) & (dfaux["dana0"] >= dfaux["dana1"]) & (dfaux["dana1"] >= dfaux["dana2"]) & (dfaux["dana2"] > 0)
-    add_stats("NUMERO RECURRENTES", mask_recurrentes.value_counts()[1], "Número de personas que han donado este año y los dos anteriores")
+    if len(mask_recurrentes.value_counts()) > 1:
+        add_stats("NUMERO RECURRENTES", mask_recurrentes.value_counts()[1], "Número de personas que han donado este año y los dos anteriores")
     # Apicar CRITERIO % DEDUCCION segun Agencia  Tributaria
     dfaux.loc[dfaux["dana0"] < 150, "deduc"] = "075"
     dfaux.loc[dfaux["dana0"] >= 150, "deduc"] = "030"
@@ -355,7 +356,8 @@ def get_json_plot_identificacion(mask_dni, dfbydni, p):
     result_json['title'] =   "¿Cómo se identifican los donantes?"
     result_json['tooltips'] =   [  str(x[0]) + " donantes (" + str(x[1])  + "%)" for x in zip(dfflat, dfnorm) ]
    
-    result_json['description'] = "De las " + str(len(dfbydni)) + " donaciones recibidas durante en el año " + p["EJERCICIO"] + ", el " + str(dfnorm[1]) + "% se ha identificado con un documento no reconocido (documento extranjero, numero escrito incorrectamente, etc)";
+    if len(dfnorm) > 1:
+        result_json['description'] = "De las " + str(len(dfbydni)) + " donaciones recibidas durante en el año " + p["EJERCICIO"] + ", el " + str(dfnorm[1]) + "% se ha identificado con un documento no reconocido (documento extranjero, numero escrito incorrectamente, etc)";
     result_json['label_yAxes'] = "Número de personas"
     result_json['label_xAxes'] = "Identificación"
     result_json['custom_yAxes_type'] = 'linear'
@@ -387,8 +389,8 @@ def get_json_plot_num_donaciones_persona(dfbydni, p):
         " Por ejemplo, en la segunda columna, podemos ver que " + str(list_personas[1]) + " personas, (es decir, el " + str(list_porcentaje[1])  + " % de los donantes) donaron " + \
         str(list_donaciones[1]) + " veces."
     else:
-        result_json['description'] = "Durante el año " + p["EJERCICIO"] + " el 100% de los donantes (es decir, " + str(list_personas[1])  + " personas) donaron " \
-        + list_donaciones[0] + " vez."
+        result_json['description'] = "Durante el año " + p["EJERCICIO"] + " el 100% de los donantes (es decir, " + str(list_personas[0])  + " personas) donaron " \
+        + str(list_donaciones[0]) + " vez."
     # print(result_json)
     return result_json
     
