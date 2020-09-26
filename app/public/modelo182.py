@@ -154,7 +154,7 @@ def reg_tipo1(df, p):
 # In[21]:
 
 
-def reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, p):
+def reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, p, hay_recurrencias):
     count = df.shape[0] 
     # REGISTROS TIPO 2 (pdf Hacienda, pág.9)
     row_beginning = "2" + p["MODELO_DECLARACION"] + p["EJERCICIO"] + p["NIF_DECLARANTE"]
@@ -242,23 +242,27 @@ def reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, p):
     dflineas2["Tipo2"]   += 'A'
 
     # 79-83 PORCENTAJE DE DEDUCCION 
-    # La formula corregida =IF((B4>=C4)AND(C4>=D4)AND(D4>0),1,0) 
-    # Donantes que donaron este año y año anterior
-    dfaux = df.merge(dfyear1, how="left",left_on="National Id", right_on="dni1")
-    # Donantes que donaron este año y ahace 2 años
-    dfaux = dfaux.merge(dfyear2, how="left",left_on="dni1", right_on="dni2")
-    # Limpiar "Donation Amount"
-    dfaux["dana0"] = dfaux["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
-    # Donantes recurrentes (este añe & año pasado & hace 2 años
-    mask_recurrentes = (~pd.isna(dfaux["dni2"])) & (dfaux["dana0"] >= dfaux["dana1"]) & (dfaux["dana1"] >= dfaux["dana2"]) & (dfaux["dana2"] > 0)
-    if len(mask_recurrentes.value_counts()) > 1:
-        add_stats("NUMERO RECURRENTES", mask_recurrentes.value_counts()[1], "Número de personas que han donado este año y los dos anteriores")
-    # Apicar CRITERIO % DEDUCCION segun Agencia  Tributaria
-    dfaux.loc[dfaux["dana0"] < 150, "deduc"] = "075"
-    dfaux.loc[dfaux["dana0"] >= 150, "deduc"] = "030"
-    dfaux.loc[mask_recurrentes, "deduc"] = "035"
-
-    dflineas2["Tipo2"] += dfaux["deduc"] + "00"
+    mask_recurrentes = pd.Series([False] * len(df)) # Declare mask as Falses (in case there are no recurrencias)
+    if hay_recurrencias:
+        # La formula corregida =IF((B4>=C4)AND(C4>=D4)AND(D4>0),1,0) 
+        # Donantes que donaron este año y año anterior
+        dfaux = df.merge(dfyear1, how="left",left_on="National Id", right_on="dni1")
+        # Donantes que donaron este año y hace 2 años
+        dfaux = dfaux.merge(dfyear2, how="left",left_on="dni1", right_on="dni2")
+        # Limpiar "Donation Amount"
+        dfaux["dana0"] = dfaux["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
+        # Donantes recurrentes (este añe & año pasado & hace 2 años
+        mask_recurrentes = (~pd.isna(dfaux["dni2"])) & (dfaux["dana0"] >= dfaux["dana1"]) & (dfaux["dana1"] >= dfaux["dana2"]) & (dfaux["dana2"] > 0)
+        if len(mask_recurrentes.value_counts()) > 1:
+            add_stats("NUMERO RECURRENTES", mask_recurrentes.value_counts()[1], "Número de personas que han donado este año y los dos anteriores")
+        # Apicar CRITERIO % DEDUCCION segun Agencia  Tributaria
+        dfaux.loc[dfaux["dana0"] < 150, "deduc"] = "075"
+        dfaux.loc[dfaux["dana0"] >= 150, "deduc"] = "030"
+        dfaux.loc[mask_recurrentes, "deduc"] = "035"
+        dflineas2["Tipo2"] += dfaux["deduc"] + "00"
+    else:
+        dfaux["dana0"] = df["Donation Amount"].str[:-2].str.replace(".","").str.replace(",", ".").astype(float)
+        dflineas2["Tipo2"] += "03500"
 
     # 84-96 IMPORTE (84-94 importe, 95-96 decimales)
     dflineas2["Tipo2"] += dfaux["dana0"].map(lambda x: '{0:011.0f}'.format(x))
@@ -357,7 +361,7 @@ def get_json_plot_identificacion(mask_dni, dfbydni, p):
     result_json['tooltips'] =   [  str(x[0]) + " donantes (" + str(x[1])  + "%)" for x in zip(dfflat, dfnorm) ]
    
     if len(dfnorm) > 1:
-        result_json['description'] = "De las " + str(len(dfbydni)) + " donaciones recibidas durante en el año " + p["EJERCICIO"] + ", el " + str(dfnorm[1]) + "% se ha identificado con un documento no reconocido (documento extranjero, numero escrito incorrectamente, etc)";
+        result_json['description'] = "De las " + str(len(dfbydni)) + " donaciones recibidas durante en el año " + p["EJERCICIO"] + ", el " + str(dfnorm[1]) + "% se ha identificado con un documento no reconocido (documento extranjero, DNI escrito incorrectamente, etc)";
     result_json['label_yAxes'] = "Número de personas"
     result_json['label_xAxes'] = "Identificación"
     result_json['custom_yAxes_type'] = 'linear'

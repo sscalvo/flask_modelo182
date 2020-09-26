@@ -150,13 +150,19 @@
 	
  	<center>
 		<div id="subscripters">
-			<p><sup>1</sup>: Columnas del CSV deben estar en este orden (no importa el nombre de los campos): <br/><b>['Documento Identificacion', 'Apellidos', 'Nombre', 'Provincia', 'Cantidad donada', 'Moneda'] </b>Por hacer: auto-matching 
-			<p><sup>2</sup>: Especificaciones oficiales del Formato del <i>modelo 182</i> 
+			<p>
+				<sup>1</sup>: Columnas del CSV deben estar en este orden (no importa el nombre de los campos, o incluso si no tienen nombre):
+			</p>
+			<p>	
+				<center><img id='imgCSV' src='../static/img/csv_tabla.png?32352' width="80%"/></p></center>
+			</p>
+			<p><sup>2</sup>: Puedes usar este fichero CSV de donaciones de ejemplo
+				<a href="{{ url_for('public.sample') }}">(descargar aqui)</a>.<br/> Fíjate en las 2 últimas lineas y verás que tienen DNIs mal-formados. 
+				<br/>También verás que el nombre de las columnas es distinto al propuesto. Aún así, la aplicación procesa el fichero correctamente.
+			</p>			
+			<p><sup>3</sup>: Especificaciones oficiales del Formato del <i>modelo 182</i> 
 				<a href="https://www6.aeat.es/static_files/common/internet/dep/aplicaciones/modelos/2017/Modelo182.pdf">aqui</a> 
 			</p>
-			<p><sup>3</sup>: Puedes usar este fichero CSV de ejemplo
-				<a href="{{ url_for('public.sample') }}">(descargar aqui)</a>. Fíjate en las 2 últimas lineas y verás que tienen DNIs mal-formados. Aún así, la aplicación los procesa correctamente. También verás que el nombre de las columnas es distinto al propuesto: Eso no es importante.
-			</p>			
 			<p><sup>4</sup>: Código fuente de la aplicación
 				<a href="https://github.com/sscalvo/flask_modelo182">aqui</a> 
 			</p>

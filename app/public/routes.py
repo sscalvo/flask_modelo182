@@ -45,7 +45,7 @@ def datos():
         linea1                      = reg_tipo1(df, params)
         ## charts ????????????
         charts                      = [] # ira guardando los charts (como json) para  enviar a Chart.js (result.html)
-        dflineas2                   = reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, params)
+        dflineas2                   = reg_tipo2(charts, df, dfyear1, dfyear2, dfprov, dfca, params, hay_recurrencias)
         dfinal                      = unir(linea1, dflineas2)
         resultado                   = convertir_iso8859(dfinal)
         DIR_DOWNLOADS               = current_app.config["DIR_DOWNLOADS"]
@@ -89,7 +89,7 @@ def download(filename):
 @public_bp.route('/sample')
 def sample():
     # session.clear() 
-    filename="ejemplo_donantes.txt"
+    filename="ejemplo_donantes.csv"
     DIR_DOWNLOADS = current_app.config["DIR_DOWNLOADS"]
     return send_from_directory(DIR_DOWNLOADS, filename, attachment_filename=filename, as_attachment=True)
 
