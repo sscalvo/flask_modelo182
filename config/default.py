@@ -8,7 +8,7 @@ BASE_DIR           = dirname(dirname(abspath(__file__)))
 DIR_STATIC         = os.path.join(get_root_path('app.public'), 'static' ) 
 DIR_DOWNLOADS      = os.path.join(get_root_path('app.public'), 'downloads' ) 
 
-SECRET_KEY         = 'your secret key'
+SECRET_KEY         = os.environ['SECRET_KEY']
 ALLOWED_EXTENSIONS = ['txt', 'csv', 'tsv']
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # max file-upload size= 16 Mb
 
@@ -17,19 +17,20 @@ MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # max file-upload size= 16 Mb
 MAIL_SERVER            = 'smtp.gmail.com'
 MAIL_PORT              = 587
 MAIL_USE_TLS           = True
-MAIL_USERNAME          = "email address from where app will be sendig emails"
+MAIL_USERNAME          = os.environ['MAIL_USERNAME']
 MAIL_USE_SSL           = False
-MAIL_PASSWORD          = "password for MAIL_USERNAME address"
-MAIL_DEFAULT_SENDER    = 'email address shown as sender'
+MAIL_PASSWORD          = os.environ['MAIL_PASSWORD']
+MAIL_DEFAULT_SENDER    = os.environ['MAIL_DEFAULT_SENDER']
 MAIL_SUPRESS_SEND      = False
 MAIL_MAX_EMAILS        = None
 MAIL_ASCII_ATTACHMENTS = False
 
 
+#OWNER
+SEND_TO_ADDRESS        = os.environ['SEND_TO_ADDRESS']
+AUTHOR_STR             = os.environ['AUTHOR_STR'] # string placed on top navbar
+AUTHOR_WEB             = os.environ['AUTHOR_WEB'] # url link for AUTHOR_STR
 
-SEND_TO_ADDRESS        = 'email address that will receive emails (you may want this to be your own email)'
-AUTHOR_STR             = 'sscalvo'
-AUTHOR_WEB             = 'http://www.sscalvo.com'
 # App environments
 APP_ENV_LOCAL = 'local'
 APP_ENV_TESTING = 'testing'
