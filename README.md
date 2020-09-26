@@ -40,10 +40,11 @@ National Id,Family Name,Given Name,Address State,Donation Amount,Currency
 43599410N,Quinteros Cava,Alfonso,Madrid,200 €,EUR
 86747193W,Solanilla Mesa,Damián,Cádiz,200 €,EUR
 ```
-## TODO:
+## Por-hacer:
 - Hacer predicción de los campos del CSV para permitir csv de diferentes orígenes 
 
 ## Contacto:
 <a href="http://sscalvo.com">www.sscalvo.com</a>
+
 sscalvo@gmail.com
 
