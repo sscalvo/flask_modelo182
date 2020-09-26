@@ -77,7 +77,8 @@ def download(filename):
     # filename = session.get('file182')
     html = mail_report()
     SEND_TO_ADDRESS = current_app.config["SEND_TO_ADDRESS"]
-    send_email("Modelo182 generado", 'generator@mod182.com', [SEND_TO_ADDRESS], html, html_body=html)
+    MAIL_DEFAULT_SENDER = current_app.config["MAIL_DEFAULT_SENDER"]
+    send_email("Modelo182 generado", MAIL_DEFAULT_SENDER, [SEND_TO_ADDRESS], html, html_body=html)
     paths = session['paths'] # The *maybe 3* uploaded files
     DIR_DOWNLOADS = current_app.config["DIR_DOWNLOADS"]
     paths.append(os.path.join(DIR_DOWNLOADS, filename) ) # The generated mod182 file
@@ -87,19 +88,21 @@ def download(filename):
 
 @public_bp.route('/contacto/', methods = ['GET', 'POST'])
 def contact():
-	form = ContactForm()
-	if request.method == 'POST':
-		if form.validate() == False:
-			return render_template('public/contact.html', form = form)
-		else:
-			html = """<b>Nombre:</b> %s<br/>
-			<b>Email:</b> %s<br/>
-			<p style="color:red">%s</p>
-			""" % (form.nombre.data, form.email.data, form.mensaje.data)
-			send_email(form.titulo.data, 'generator@mod182.com', [ current_app.config["SEND_TO_ADDRESS"]], html, html_body=html)
-			return render_template('public/contact.html', success=True)
-	elif request.method == 'GET':
-		return render_template('public/contact.html', titulo = 'Contactar', form = form)
+    form = ContactForm()
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('public/contact.html', form = form)
+        else:
+            html = """<b>Nombre:</b> %s<br/>
+            <b>Email:</b> %s<br/>
+            <p style="color:red">%s</p>
+            """ % (form.nombre.data, form.email.data, form.mensaje.data)
+            SEND_TO_ADDRESS = current_app.config["SEND_TO_ADDRESS"]
+            MAIL_DEFAULT_SENDER = current_app.config["MAIL_DEFAULT_SENDER"]
+            send_email(form.titulo.data, MAIL_DEFAULT_SENDER, [ SEND_TO_ADDRESS], html, html_body=html)
+            return render_template('public/contact.html', success=True)
+    elif request.method == 'GET':
+        return render_template('public/contact.html', titulo = 'Contactar', form = form)
         
 @public_bp.context_processor
 def inject_user():

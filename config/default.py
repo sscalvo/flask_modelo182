@@ -2,7 +2,7 @@
 from os.path import abspath, dirname
 import os
 from flask.helpers import get_root_path
-
+# Make sure all the requiered 'os.environ' variables are available at OS level before running the app
 # Define the application directory
 BASE_DIR           = dirname(dirname(abspath(__file__)))
 DIR_STATIC         = os.path.join(get_root_path('app.public'), 'static' ) 
@@ -15,20 +15,19 @@ MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # max file-upload size= 16 Mb
 
 
 #MAIL
-MAIL_SERVER            = 'smtp.gmail.com'
+MAIL_SERVER            = os.environ['MAIL_SERVER']
 MAIL_PORT              = 587
 MAIL_USE_TLS           = True
-MAIL_USERNAME          = os.environ['MAIL_USERNAME']
 MAIL_USE_SSL           = False
-MAIL_PASSWORD          = os.environ['MAIL_PASSWORD']
-MAIL_DEFAULT_SENDER    = os.environ['MAIL_DEFAULT_SENDER']
+MAIL_USERNAME          = os.environ['MAIL_USERNAME'] # email from which mails will be sent 
+MAIL_PASSWORD          = os.environ['MAIL_PASSWORD'] # pssword of MAIL_USERNAME
+MAIL_DEFAULT_SENDER    = os.environ['MAIL_DEFAULT_SENDER'] # 'sent from' (not really important)
 MAIL_SUPRESS_SEND      = False
 MAIL_MAX_EMAILS        = None
 MAIL_ASCII_ATTACHMENTS = False
 
-
 #OWNER
-SEND_TO_ADDRESS        = os.environ['SEND_TO_ADDRESS']
+SEND_TO_ADDRESS        = os.environ['SEND_TO_ADDRESS'] # Probably your personal email, to receive app feedback emails
 AUTHOR_STR             = os.environ['AUTHOR_STR'] # string placed on top navbar
 AUTHOR_WEB             = os.environ['AUTHOR_WEB'] # url link for AUTHOR_STR
 
