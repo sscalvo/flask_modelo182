@@ -1,1 +1,1 @@
-web: gunicorn --certfile cert.cer --keyfile priv.key entrypoint:app
+web: gunicorn entrypoint:app
