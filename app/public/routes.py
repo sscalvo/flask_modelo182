@@ -13,7 +13,11 @@ from .tools import handle_upload_files, id_generator, mail_report, delete_files
 from .modelo182 import load_form_fields, load_uploaded_files, load_local_dataframes, reg_tipo1, reg_tipo2, unir
 from .modelo182 import convertir_iso8859, save_to_file, get_stats
 
-
+@public_bp.before_request
+def beforeRequest():
+    print("Before request", str(request.url.startswith('https')))
+    if not request.url.startswith('https'):
+        return redirect(request.url.replace('http', 'https', 1))
 
 @public_bp.route('/', methods = ['GET', 'POST'])   
 def datos():
