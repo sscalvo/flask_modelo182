@@ -16,6 +16,7 @@ def registrar_error_handlers(app):
 
 def create_app(settings_module='config.prod'):
     app = Flask(__name__)
+    print(f"el Flask(__name__) es {__name__}")
     # Talisman(app)
     app.config.from_object(settings_module)
     mail.init_app(app)  # 3. Inicializamos el objeto mail
